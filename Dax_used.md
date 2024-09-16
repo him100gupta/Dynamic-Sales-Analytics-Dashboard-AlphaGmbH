@@ -1,3 +1,25 @@
+### Tables
++ Filtered Currencies
+```
+FilteredCurrencies = ADDCOLUMNS(
+    DISTINCT(fact_InternetSales[CurrencyKey]),
+    "CurrencyName", LOOKUPVALUE(dim_Currency[CurrencyAlternateKey], dim_Currency[CurrencyKey], fact_InternetSales[CurrencyKey])
+)
+```
+
++ dim_date
+```
+dim_date = ADDCOLUMNS(
+    CALENDAR(MIN(fact_InternetSales[ShipDate]), MAX(fact_InternetSales[ShipDate])),
+    "Year", YEAR([Date]),
+    "Month", MONTH([Date]),
+    "Month_Name", FORMAT([Date], "MMMM"),
+    "Day_of_week", FORMAT([Date], "DDDD"),
+    "Quarter", "Q"&FORMAT([Date], "Q"))
+```
+
+### kPIs
+
 + Total Sales
 ```
 Total Sales = 
